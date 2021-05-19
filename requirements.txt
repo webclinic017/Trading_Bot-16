@@ -1,0 +1,8 @@
+python-binance
+TA-Lib
+numpy
+websocket_client
+pprint
+config
+json
+requests
