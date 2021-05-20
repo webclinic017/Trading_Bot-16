@@ -15,6 +15,7 @@ client = Client(config.API_KEY, config.API_SECRET, tld='us')
 time_res = client.get_server_time()
 #status = client.get_system_status()
 exchange_info = client.get_exchange_info()
+
 closes={}
 for s in exchange_info['symbols']:
     closes[s['symbol']]=[]
@@ -44,12 +45,18 @@ def on_message(ws, message):
             formatted = "{:.3f}".format(last_changeMovingAverage)
             print(formatted, end = ' ')
         if formatted == "nan":
-            print()
+            print(end=' ')
         if change > float(formatted):
-            print("↑")
+            print("↑",end=' ')
         if change < float(formatted):
-            print("↓")
+            print("↓",end=' ')
         if change == float(formatted):
-            print("=")
+            print("=",end=' ')
+        agg_trades = client.aggregate_trade_iter(symbol=symbol, start_str='1 hour ago UTC')
+        agg_trade_list=[]
+        for trade in agg_trades:
+            agg_trade_list.append(trade["p"])
+        percent="{:.3%}".format((float(agg_trade_list[len(agg_trade_list)-1])-float(agg_trade_list[0]))/float(agg_trade_list[0]))
+        print(percent)
 ws = websocket.WebSocketApp("wss://stream.binance.us:9443/ws/!ticker@arr", on_open=on_open, on_close=on_close, on_message=on_message)
 ws.run_forever()
