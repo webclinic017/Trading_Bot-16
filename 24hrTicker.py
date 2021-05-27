@@ -1,4 +1,4 @@
-import websocket, json, pprint, config, requests, numpy, talib
+import websocket, json, pprint, config, requests, numpy, talib, time
 from binance.client import Client
 
 #symbol="btcusdt"
