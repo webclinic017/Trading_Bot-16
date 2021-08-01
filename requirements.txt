@@ -7,3 +7,5 @@ config
 json
 requests
 time
+backtrader
+matplotlib

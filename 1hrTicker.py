@@ -38,4 +38,4 @@ while True:
             print("↓")
         if float(percent) == float(changeMovingAverage):
             print("=")
-        time.sleep(1)
+        time.sleep(.1)
