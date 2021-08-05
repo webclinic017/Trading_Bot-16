@@ -11,6 +11,10 @@ class TestStrategy(backtrader.Strategy):
         # Keep a reference to the "close" line in the data[0] dataseries
         self.dataclose = self.datas[0].close
         self.order = None
+        self.macd = backtrader.indicators.MACDHisto(self.data)
+        #self.rsi = backtrader.indicators.RelativeStrengthIndex(self.data)
+        #self.bBands = backtrader.indicators.BollingerBands(self.data)
+        self.ema = backtrader.indicators.ExponentialMovingAverage(self.data, period=21)
 
     def notify_order(self, order):
         if order.status in [order.Submitted, order.Accepted]:
@@ -32,16 +36,12 @@ class TestStrategy(backtrader.Strategy):
         if self.order:
             return
         if not self.position:
-            if self.dataclose[0] < self.dataclose[-1]:
-                # current close less than previous close
-
-                if self.dataclose[-1] < self.dataclose[-2]:
+            if self.macd.macd[0] < self.macd.signal[0] and self.ema[0] > self.data[0]:
                     # previous close less than the previous close
-
                     # BUY, BUY, BUY!!! (with all possible default parameters)
                     self.log('BUY CREATED, %.2f' % self.dataclose[0])
                     self.order = self.buy()
         else:
-            if len(self) >= self.bar_executed +5:
+            if self.macd.macd[0] > self.macd.signal[0] and self.ema[0] < self.data[0]:
                 self.log('SELL CREATED {}'.format(self.dataclose[0]))
                 self.order = self.sell()
