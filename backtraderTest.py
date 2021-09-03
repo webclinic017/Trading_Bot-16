@@ -1,8 +1,8 @@
 import backtrader
 import datetime
 from strategies import TestStrategy
-data = backtrader.feeds.YahooFinanceCSVData(
-    dataname='historicalData/tsla2021.csv',
+data = backtrader.feeds.YahooFinanceData(
+    dataname='historicalData/medp2021.csv',
     fromdate=datetime.datetime(2000, 1, 1),
     todate=datetime.datetime(2021, 12, 31), reverse=False)
 
