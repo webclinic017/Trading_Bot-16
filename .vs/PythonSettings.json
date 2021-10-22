@@ -1,4 +1,4 @@
 {
-  "Interpreter": "Global|ContinuumAnalytics|Anaconda38-64",
-  "SuppressPackageInstallationPrompt": true
+  "SuppressPackageInstallationPrompt": true,
+  "Interpreter": "Global|ContinuumAnalytics|Anaconda38-64"
 }

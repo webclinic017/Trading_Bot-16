@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\historicalData"
   ],
-  "SelectedNode": "\\strategies.py",
+  "SelectedNode": "\\backtraderTest.py",
   "PreviewInSolutionExplorer": false
 }

@@ -2,6 +2,11 @@ import backtrader
 
 class TestStrategy(backtrader.Strategy):
 
+    params=(
+            ('trailpercent', 0.0333),
+            ('stoploss', 0.1333)
+           )
+
     def log(self, txt, dt=None):
         dt = dt or self.datas[0].datetime.date(0)
         print('%s, %s' % (dt.isoformat(), txt))
@@ -10,10 +15,11 @@ class TestStrategy(backtrader.Strategy):
         self.dataclose = self.datas[0].close
         self.order = None
         self.macd = backtrader.indicators.MACDHisto(self.data)
+        self.ema = backtrader.indicators.ExponentialMovingAverage(self.data, period = 21)
         #self.rsi = backtrader.indicators.RelativeStrengthIndex(self.data)
         #self.bbands = backtrader.indicators.BollingerBands(self.data)
         #self.psar = backtrader.indicators.ParabolicSAR(self.data)
-        self.ema = backtrader.indicators.ExponentialMovingAverage(self.data, period = 21)
+        #self.stddev = backtrader.indicators.StandardDeviation(self.data, period = 21)
 
     def notify_order(self, order):
         if order.status in [order.Submitted, order.Accepted]:
@@ -27,8 +33,8 @@ class TestStrategy(backtrader.Strategy):
         self.order = None
 
     def next(self):
-        trailpercent=0.033
-        stoploss=0.13
+        trailpercent=self.params.trailpercent
+        stoploss=self.params.stoploss
         self.log('Close, %.2f' % self.dataclose[0])
         if self.order:
             return
@@ -49,8 +55,7 @@ class TestStrategy(backtrader.Strategy):
             else:
                 if self.getposition(data=self.data).size > 0:
                     if self.getposition(data=self.data).price - (self.getposition(data=self.data).price * stoploss) > self.data[0]:
-                        self.order=self.close();
+                        self.order=self.close()
                 if self.getposition(data=self.data).size < 0:
                     if self.getposition(data=self.data).price + (self.getposition(data=self.data).price * stoploss) < self.data[0]:
-                        self.order=self.close();
-
+                        self.order=self.close()

@@ -1,5 +1,5 @@
 # pythonProjectCryptoBot
-###Improvements
+Improvements<br/>
 -Bandwagon bot (based off volume indicators)<br/>
 -Forex grid trading bot<br/>
 -Bot to get as much of a secuirty as possible<br/>
