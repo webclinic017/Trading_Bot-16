@@ -5,9 +5,9 @@ import alpaca_backtrader_api
 from strategies import TestStrategy
 
 data = backtrader.feeds.YahooFinanceData(
-    dataname='historicalData/btc-usd.csv',
+    dataname='historicalData/BTC-usd (2).csv',
     fromdate=datetime.datetime(2000, 1, 1),
-    todate=datetime.datetime(2021, 12, 31), reverse=False)
+    todate=datetime.datetime(2022, 12, 31), reverse=False)
 
 cerebro = backtrader.Cerebro()
 cerebro.adddata(data)
